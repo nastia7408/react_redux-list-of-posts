@@ -41,9 +41,7 @@ export const PostDetails: React.FC<Props> = ({ post }) => {
       });
 
       dispatch(addComment(newComment));
-    } catch (error) {
-      console.error('Failed to add comment', error);
-    }
+    } catch (error) {}
   };
 
   const handleDeleteComment = async (commentId: number) => {
@@ -51,9 +49,7 @@ export const PostDetails: React.FC<Props> = ({ post }) => {
 
     try {
       await commentsApi.deleteComment(commentId);
-    } catch (error) {
-      console.error('Failed to delete comment', error);
-    }
+    } catch (error) {}
   };
 
   return (

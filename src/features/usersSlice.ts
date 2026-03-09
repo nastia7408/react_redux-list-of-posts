@@ -15,21 +15,24 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchUsers.pending, state => {
-        state.loading = true;
-        state.loaded = false;
-        state.hasError = false;
-      })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.items = action.payload;
-        state.loading = false;
-        state.loaded = true;
-      })
-      .addCase(fetchUsers.rejected, state => {
-        state.loading = false;
-        state.loaded = true;
-        state.hasError = true;
-      });
+      .addCase(fetchUsers.pending, state => ({
+        ...state,
+        loading: true,
+        loaded: false,
+        hasError: false,
+      }))
+      .addCase(fetchUsers.fulfilled, (state, action) => ({
+        ...state,
+        items: action.payload,
+        loading: false,
+        loaded: true,
+      }))
+      .addCase(fetchUsers.rejected, state => ({
+        ...state,
+        loading: false,
+        loaded: true,
+        hasError: true,
+      }));
   },
 });
 
