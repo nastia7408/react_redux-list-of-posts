@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as commentsApi from '../api/comments';
 import { Comment } from '../types/Comment';
@@ -19,28 +21,24 @@ const commentsSlice = createSlice({
       state.items.push(action.payload);
     },
 
-    deleteComment: (state, action) => ({
-      ...state,
-      items: state.items.filter(c => c.id !== action.payload),
-    }),
+    deleteComment: (state, action) => {
+      state.items = state.items.filter(c => c.id !== action.payload);
+    },
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchComments.pending, state => ({
-        ...state,
-        loaded: false,
-        hasError: false,
-      }))
-      .addCase(fetchComments.fulfilled, (state, action) => ({
-        ...state,
-        items: action.payload,
-        loaded: true,
-      }))
-      .addCase(fetchComments.rejected, state => ({
-        ...state,
-        loaded: true,
-        hasError: true,
-      }));
+      .addCase(fetchComments.pending, state => {
+        state.loaded = false;
+        state.hasError = false;
+      })
+      .addCase(fetchComments.fulfilled, (state, action) => {
+        state.items = action.payload;
+        state.loaded = true;
+      })
+      .addCase(fetchComments.rejected, state => {
+        state.loaded = true;
+        state.hasError = true;
+      });
   },
 });
 
